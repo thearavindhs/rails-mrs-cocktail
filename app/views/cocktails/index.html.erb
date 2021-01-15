@@ -1,13 +1,42 @@
-<div class="container">
-<ul>
-  <% @cocktails.each do |cocktail| %>
-    <li>
-      <%= link_to cocktail.name, cocktail_path(cocktail) %>
-    </li>
-  <% end %>
-</ul>
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+         <li class="nav-item active">
+            <%= link_to "Home", root_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+            <%= link_to "Add Cocktail", new_cocktail_path, class: "nav-link" %>
+         </li>
+      </ul>
+   </div>
 </div>
-
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://res.cloudinary.com/thearavindhs/image/upload/v1610678241/meritt-thomas-OGTEP0LyYNk-unsplash_rewtkq.jpg')">
+   <div class="container">
+      <h1>Mister Cocktail brings <strong>cocktail lovers</strong> together!</h1>
+      <p>Add your favorite cocktail</p>
+   </div>
+</div>
+<div>
+   <%= simple_form_for :search, url: root_path, method: :get do |f| %>
+   <div class="search-form-control form-group">
+      <input class="form-control string required" type="text" name="search[query]" id="search_query" />
+      <button name="button" type="submit" class="btn btn-flat">
+      <i class="fas fa-search"></i> Search Cocktail
+      </button>
+   </div>
+   <% end %>
+</div>
 <div class="container">
-<p><%= link_to "Add Cocktail", new_cocktail_path %></p>
+  <% @cocktails.each do |cocktail| %>
+    <% if cocktail.photo.attached? %>
+      <div class="cards">
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path cocktail.photo.key%>')">
+        <%= link_to cocktail.name, cocktail_path(cocktail) %>
+      </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>
